@@ -2,7 +2,12 @@ import googlemaps
 import pendulum
 import json
 
-def weekly_travel(home: str, work: str, wkly_dests: list) -> float:
+def weekly_travel(destinations):
+    #Parse Input
+    home = destinations['home']
+    work = destinations['work']
+    wkly_dests = destinations['wkly_dests']
+
     # Load API Key
     f = open("googlemapskey.txt","r")
     gmaps = googlemaps.Client(key=f.read())
@@ -51,10 +56,6 @@ if __name__ == "__main__":
     with open('destinations.json') as json_file:
         data = json.load(json_file)
 
-    home = data['home']
-    work = data['work']
-    wkly_dests = data['wkly_dests']
-
-    commute = weekly_travel(home, work, wkly_dests)
+    commute = weekly_travel(data)
 
     print(str(commute/3600)[:4]+' hours of travel per week')
